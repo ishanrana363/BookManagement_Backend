@@ -15,9 +15,23 @@ const uploadBook = async (req,res)=>{
 };
 
 
+const singleBook =  async (req,res)=>{
+    try {
+        let id = req.params.id;
+        const filter = {
+            _id : id
+        };
+        let data = await bookModel.findById(filter);
+        return successResponse(res,200,"Data fetch by id book successfully", data);
+    } catch (error) {
+        return errorResponse(res,500,"Something went wrong",error);
+    }
+}
+
 
 
 
 module.exports = {
-    uploadBook
-}
+    uploadBook,
+    singleBook
+};
