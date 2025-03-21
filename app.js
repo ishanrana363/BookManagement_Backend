@@ -20,6 +20,11 @@ mongoose.connect(dbPort).then((res)=>{
 
 
 
+const router = require("./src/routes/api");
+
+app.use("/api/v1", router);
+
+
 
 
 
