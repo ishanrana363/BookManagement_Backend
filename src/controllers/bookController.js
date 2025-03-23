@@ -24,6 +24,9 @@ const singleBook = async (req, res) => {
             _id: id
         };
         let data = await bookModel.findById(filter);
+        if(!data){
+            return errorResponse(res,404,"Book not found.", null)
+        }
         return successResponse(res, 200, "Data fetch by id book successfully", data);
     } catch (error) {
         return errorResponse(res, 500, "Something went wrong", error);
@@ -111,6 +114,22 @@ const updateBook = async (req, res) => {
         console.log(error)
         return errorResponse(res, 500, "Something went wrong", error);
     }
+};
+
+const deleteBook = async (req,res)=>{
+    try {
+        let id = req.params.id;
+        const filter = {
+            _id : id
+        };
+        const data = await bookModel.deleteOne(filter);
+        if(!data){
+            return errorResponse(res,404,"Data not found",null);
+        }
+        return successResponse(res,200,"Book delete succesfully.",data);
+    } catch (error) {
+        return errorResponse(res,500,"Something went wrong.", error )
+    }
 }
 
 
@@ -119,5 +138,6 @@ module.exports = {
     uploadBook,
     singleBook,
     allBook,
-    updateBook
+    updateBook,
+    deleteBook
 };
